@@ -32,6 +32,8 @@ export const AppProvider = ({ children }) => {
 //  const greetings="hello"
     const [state, dispatch] = useReducer(reducer, intialState)
 
+    //get this from utils.js it require cart as parameter and we get it
+    // from state.cart bcos we have cart in state so access would be  state.cart
     const { totalAmount,totalCost}=getTotals(state.cart)
     
     const clearCart = () => { 
@@ -49,7 +51,7 @@ export const AppProvider = ({ children }) => {
 const decrease = (id) => { 
         dispatch({ type: DECREASE, payload: {id} })
     }
-    return (<AppContext.Provider value={{ ...state,clearCart,removeItem,increase,decrease} }>
+    return (<AppContext.Provider value={{ ...state,clearCart,removeItem,increase,decrease,totalAmount,totalCost} }>
         { children}
     </AppContext.Provider>)
 }

@@ -2,7 +2,7 @@ import CartItem from './CartItem';
 import { useGlobalContext } from './Context';
 import cartItems from './data';
 const CartContainer = () => {
-  const { cart,clearCart } = useGlobalContext()
+  const { cart,clearCart,totalCost } = useGlobalContext()
   // console.log(cart)
   // const cartArray = [...cartItems];
   // this array.from will convert that object into the array 
@@ -28,7 +28,7 @@ const CartContainer = () => {
       {/* cart items */}
       <div>
         {cartArray.map((cartItem) => {
-          // console.log(cartItem)
+          console.log(cartItem)
           //,here cartItem become array of array so
           // first we do destructure of array then we use that value 
           const [id,item]=cartItem
@@ -40,7 +40,7 @@ const CartContainer = () => {
         <hr />
         <div>
           <h5 className='cart-total'>
-            total <span>$10</span>
+            total <span>${ totalCost.toFixed(2)}</span>
           </h5>
         </div>
         <button

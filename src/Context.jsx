@@ -15,6 +15,7 @@ import {
 } from "./action"
 import cartItems from "./data";
 import { getTotals } from "./utils";
+const url = 'https://www.course-api.com/react-useReducer-cart-project';
 
 const AppContext = createContext()
 
@@ -24,7 +25,8 @@ const intialState = {
     // this Map will convert it in object of key value pair 
     // cart: new Map()
     //it doesnt required to change any code
-    cart:new Map(cartItems.map((item)=>[item.id , item]))
+    // cart:new Map(cartItems.map((item)=>[item.id , item]))
+    cart :new Map()
     
 }
 
@@ -48,9 +50,21 @@ export const AppProvider = ({ children }) => {
     const increase = (id) => { 
         dispatch({ type: INCREASE, payload: {id} })
     }
-const decrease = (id) => { 
+    const decrease = (id) => { 
         dispatch({ type: DECREASE, payload: {id} })
     }
+
+    const fetchData = async () => {
+        dispatch({type:LOADING})
+        const response = await fetch(url)
+        const cart = await response.json()
+        dispatch({ type: DISPLAY_ITEMS, payload: {cart} })
+        console.log(cart)
+    }
+    useEffect(() => { 
+        fetchData()
+    },[])
+
     return (<AppContext.Provider value={{ ...state,clearCart,removeItem,increase,decrease,totalAmount,totalCost} }>
         { children}
     </AppContext.Provider>)

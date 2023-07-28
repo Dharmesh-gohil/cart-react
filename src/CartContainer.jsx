@@ -1,8 +1,13 @@
 import CartItem from './CartItem';
+import { useGlobalContext } from './Context';
 import cartItems from './data';
 const CartContainer = () => {
-  const cartArray = [...cartItems];
-
+  const { cart,clearCart } = useGlobalContext()
+  // console.log(cart)
+  // const cartArray = [...cartItems];
+  // this array.from will convert that object into the array 
+  const cartArray = Array.from(cart.entries())
+  // console.log(cartArray)
   if (cartArray.length === 0) {
     return (
       <section className='cart'>
@@ -23,7 +28,11 @@ const CartContainer = () => {
       {/* cart items */}
       <div>
         {cartArray.map((cartItem) => {
-          return <CartItem key={cartItem.id} {...cartItem} />;
+          // console.log(cartItem)
+          //,here cartItem become array of array so
+          // first we do destructure of array then we use that value 
+          const [id,item]=cartItem
+          return <CartItem key={id} {...item} />;
         })}
       </div>
       {/* cart footer */}
@@ -36,7 +45,7 @@ const CartContainer = () => {
         </div>
         <button
           className='btn btn-hipster'
-          onClick={() => console.log('clear cart')}
+          onClick={clearCart}
         >
           clear cart
         </button>
